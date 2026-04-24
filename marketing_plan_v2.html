@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鮮果日記 | 上班族活力訂閱計畫</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .lake-gradient {
+            background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%);
+        }
+
+        .bouncing-card {
+            position: fixed;
+            z-index: 50;
+            pointer-events: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="bg-[#F0F9F8] text-[#2D4F4B]">
+
+    <!-- 隨機彈跳的水果卡片 -->
+    <div id="animation-container" class="fixed inset-0 pointer-events-none">
+        <div class="bouncing-card w-48 h-48 absolute"><img
+                src="https://images.unsplash.com/photo-1557800636-894a64c1696f?auto=format&fit=crop&w=400"
+                class="w-full h-full object-cover"></div>
+        <div class="bouncing-card w-56 h-56 absolute"><img
+                src="https://images.unsplash.com/photo-1560806887-1e4cd0b6bcd6?auto=format&fit=crop&w=400"
+                class="w-full h-full object-cover"></div>
+        <div class="bouncing-card w-40 h-40 absolute"><img
+                src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e17?auto=format&fit=crop&w=400"
+                class="w-full h-full object-cover"></div>
+    </div>
+
+    <!-- 導覽列 -->
+    <nav class="flex justify-between items-center px-10 md:px-20 py-8 relative z-10">
+        <div class="text-2xl font-heading font-bold tracking-tight">FRESH DIARY</div>
+        <div class="hidden md:flex space-x-12 text-sm font-medium">
+            <a href="#" class="hover:opacity-60 transition">首頁</a>
+            <a href="#" class="hover:opacity-60 transition">訂閱方案</a>
+            <a href="#" class="hover:opacity-60 transition">健康資訊</a>
+        </div>
+    </nav>
+
+    <!-- Hero 區塊 -->
+    <section class="lake-gradient min-h-[70vh] flex flex-col items-center justify-center text-center px-6">
+        <h1 class="text-5xl md:text-7xl font-heading font-bold mb-8 leading-tight">
+            為您的辦公日常<br>注入 100% 自然活力
+        </h1>
+        <p class="text-xl md:text-2xl text-[#4A706C] mb-12">鮮果日記 - 上班族活力訂閱推廣計畫</p>
+        <button
+            class="bg-[#2D4F4B] text-white px-12 py-5 rounded-full text-lg font-bold hover:bg-opacity-90 transition transform hover:-translate-y-1">
+            立即訂閱 NT$599/週
+        </button>
+    </section>
+
+    <!-- 教學區塊 (Tutorial) -->
+    <section class="py-32 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-heading font-bold mb-20">三步驟開啟健康循環</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div class="flex flex-col items-center">
+                    <div
+                        class="w-16 h-16 bg-[#B2DFDB] rounded-full flex items-center justify-center text-2xl font-bold mb-8">
+                        1</div>
+                    <h3 class="text-2xl font-bold mb-4">在線選擇方案</h3>
+                    <p class="text-gray-500 leading-relaxed">登入官網，選擇適合您辦公室規模的方案。</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div
+                        class="w-16 h-16 bg-[#B2DFDB] rounded-full flex items-center justify-center text-2xl font-bold mb-8">
+                        2</div>
+                    <h3 class="text-2xl font-bold mb-4">產地新鮮直送</h3>
+                    <p class="text-gray-500 leading-relaxed">每週一採摘，週二直接配送至您的辦公桌。</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div
+                        class="w-16 h-16 bg-[#B2DFDB] rounded-full flex items-center justify-center text-2xl font-bold mb-8">
+                        3</div>
+                    <h3 class="text-2xl font-bold mb-4">享受自然活力</h3>
+                    <p class="text-gray-500 leading-relaxed">即開即食，為忙碌午後補充最天然的動力。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const cards = document.querySelectorAll('.bouncing-card');
+        const cardData = [];
+
+        cards.forEach((card) => {
+            const size = card.offsetWidth;
+            cardData.push({
+                element: card,
+                x: Math.random() * (window.innerWidth - size),
+                y: Math.random() * (window.innerHeight - size),
+                vx: (Math.random() - 0.5) * 6,
+                vy: (Math.random() - 0.5) * 6,
+                size: size
+            });
+        });
+
+        function animate() {
+            cardData.forEach(data => {
+                data.x += data.vx;
+                data.y += data.vy;
+
+                if (data.x <= 0 || data.x + data.size >= window.innerWidth) {
+                    data.vx *= -1;
+                    data.vx += (Math.random() - 0.5) * 2;
+                }
+                if (data.y <= 0 || data.y + data.size >= window.innerHeight) {
+                    data.vy *= -1;
+                    data.vy += (Math.random() - 0.5) * 2;
+                }
+
+                // 限制速度
+                data.vx = Math.max(-10, Math.min(10, data.vx));
+                data.vy = Math.max(-10, Math.min(10, data.vy));
+
+                data.element.style.transform = `translate(${data.x}px, ${data.y}px)`;
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            cardData.forEach(data => {
+                if (data.x + data.size > window.innerWidth) data.x = window.innerWidth - data.size;
+                if (data.y + data.size > window.innerHeight) data.y = window.innerHeight - data.size;
+            });
+        });
+
+        animate();
+    </script>
+</body>
+
+</html>
